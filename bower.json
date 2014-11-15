@@ -16,5 +16,8 @@
   "dependencies": {
     "purescript-arrays": "~0.2.0",
     "purescript-foldable-traversable": "~0.1.4"
+  },
+  "devDependencies": {
+    "purescript-quickcheck": "~0.3.0"
   }
 }
