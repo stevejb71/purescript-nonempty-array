@@ -52,7 +52,7 @@ instance bindNonEmpty :: Bind NonEmpty where
 
 instance monadNonEmpty :: Monad NonEmpty
 
-instance semigroupNonEmpty :: (Semigroup a) => Semigroup (NonEmpty a) where
+instance semigroupNonEmpty :: Semigroup (NonEmpty a) where
   (<>) = append
 
 infix 5 :|
@@ -76,6 +76,7 @@ last (NonEmpty a []) = a
 last (NonEmpty _ as) = AU.last as
 
 pop :: forall a. NonEmpty a -> [a]
+pop (NonEmpty a []) = []
 pop (NonEmpty a as) = a : (pop_ as)
 
 (<|) :: forall a. a -> NonEmpty a -> NonEmpty a

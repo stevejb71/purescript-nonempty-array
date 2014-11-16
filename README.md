@@ -22,7 +22,7 @@
 
     instance monadNonEmpty :: Monad NonEmpty
 
-    instance semigroupNonEmpty :: (Semigroup a) => Semigroup (NonEmpty a)
+    instance semigroupNonEmpty :: Semigroup (NonEmpty a)
 
     instance showNonEmpty :: (Show a) => Show (NonEmpty a)
 
