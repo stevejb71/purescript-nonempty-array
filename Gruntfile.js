@@ -6,16 +6,23 @@ module.exports = function(grunt) {
       "src/**/*.purs",
       "bower_components/*/src/**/*.purs",
     ],
+    testFiles: [
+      "tests/*.purs"
+    ],
     clean: ["output", "output_tests"],
     pscMake: {
       src: ["<%=libFiles%>"],
       tests: {
-        src: ["tests/Main.purs", "<%=libFiles%>"]
+        src: ["<%=testFiles%>", "<%=libFiles%>"]
       }
     },
     psc: {
       tests: {
-        src: ["tests/Main.purs", "<%=libFiles%>"],
+        options: {
+          module: ["Main"],
+          main: true
+        },        
+        src: ["<%=testFiles%>", "<%=libFiles%>"],
         dest: "output_tests/Main.js"
       }
     },
