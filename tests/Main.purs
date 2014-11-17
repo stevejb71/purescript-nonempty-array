@@ -36,8 +36,12 @@ main = do
     qc "Drop" \xs -> A.length (drop (length xs) xs) == 0
     qc "Drop 1" \xs -> drop 1 xs == tail xs
     qc "Reverse" \xs -> reverse (reverse xs) == xs
-    qc_ll "Append - Length" \xs ys -> length (append xs ys) == length xs + length ys
+    qc_ll "Append - Length" \xs ys -> length (xs `append` ys) == length xs + length ys
     qc_nl "Cons - Length" \x xs -> length (x <| xs) == length xs + 1
     qc_nl "Cons - Head" \x xs -> head (x <| xs) == x
     qc_nl "Cons - Tail" \x xs -> tail (x <| xs) == toArray xs
     qc "Last" \(NonEmpty a as) -> let x = (NonEmpty a as) in (A.length as == 0 && last x == a) || (last x == fromJust (A.last as))
+    qc "nub" \xs -> xs == nub (xs `append` xs)
+    qc "nubBy" \xs -> xs == nubBy (==) (xs `append` xs)
+    qc "functor - identity" \xs -> (\x -> x) <$> xs == xs 
+    qc "functor - composition" \xs -> ((+) 1) <$> ((+) 2) <$> xs == ((+) 3) <$> xs
