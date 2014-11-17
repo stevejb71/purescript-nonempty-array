@@ -8,6 +8,7 @@ module Data.Array.NonEmpty
     ,head
     ,tail
     ,last
+    ,push
     ,pop
     ,(<|)
     ,take
@@ -74,6 +75,9 @@ tail (NonEmpty _ as) = as
 last :: forall a. NonEmpty a -> a
 last (NonEmpty a []) = a
 last (NonEmpty _ as) = AU.last as
+
+push :: forall a. a -> NonEmpty a -> NonEmpty a
+push x (NonEmpty a as) = NonEmpty x (a:as)
 
 pop :: forall a. NonEmpty a -> [a]
 pop (NonEmpty a []) = []

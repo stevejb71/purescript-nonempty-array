@@ -57,6 +57,8 @@
 
     pop :: forall a. NonEmpty a -> [a]
 
+    push :: forall a. a -> NonEmpty a -> NonEmpty a
+
     reducel :: forall a. (a -> a -> a) -> NonEmpty a -> a
 
     reducer :: forall a. (a -> a -> a) -> NonEmpty a -> a

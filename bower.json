@@ -2,7 +2,7 @@
   "name": "purescript-nonempty-arrays",
   "homepage": "https://github.com/stevejb71/purescript-nonempty-array",
   "description": "Arrays guaranteed to have at least one element.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "keywords": [
     "purescript"
   ],
