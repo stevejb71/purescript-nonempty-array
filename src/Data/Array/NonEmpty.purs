@@ -34,7 +34,7 @@ import Data.Maybe (Maybe(..))
 data NonEmpty a = NonEmpty a [a]
 
 instance showNonEmpty :: (Show a) => Show (NonEmpty a) where
-    show (NonEmpty a as) = (show a) ++ " :| " ++ (show as)
+    show (NonEmpty a as) = "[" ++ (show a) ++ ":|" ++ (show as) ++ "]"
 
 instance eqNonEmpty :: (Eq a) => Eq (NonEmpty a) where
   (==) (NonEmpty l ls) (NonEmpty r rs) = l == r && ls == rs
