@@ -27,7 +27,8 @@ module Data.Array.NonEmpty
 
 import qualified Data.Array (append, drop, take, map, filter, nub, nubBy, concatMap, (!!), length, reverse) as A
 import qualified Data.Array.Unsafe (last) as AU
-import qualified Data.Foldable (Foldable, foldr, foldl, foldMap, foldrArray, foldlArray) as F
+import Data.Foldable (Foldable, foldr, foldl, foldMap)
+import qualified Data.Traversable (Traversable, traverse, sequence) as T
 import Data.Maybe (Maybe(..))
 
 data NonEmpty a = NonEmpty a [a]
@@ -55,6 +56,19 @@ instance monadNonEmpty :: Monad NonEmpty
 
 instance semigroupNonEmpty :: Semigroup (NonEmpty a) where
   (<>) = append
+
+instance foldableNonEmpty :: Foldable NonEmpty where
+  foldr f b as = foldr f b (toArray as)
+  foldl f b as = foldl f b (toArray as)
+  foldMap f as = foldMap f (toArray as)
+
+instance traversableNonEmpty :: T.Traversable NonEmpty where
+  traverse = traverse_
+  sequence = traverse_ id
+
+traverse_ :: forall a b m. (Applicative m) => (a -> m b) -> NonEmpty a -> m (NonEmpty b)
+traverse_ f (NonEmpty a []) = singleton <$> f a
+traverse_ f (NonEmpty a as) = (<|) <$> (f a) <*> traverse_ f (fromArray_ as)
 
 infix 5 :|
 (:|) :: forall a. a -> [a] -> NonEmpty a
@@ -118,10 +132,7 @@ concatMap :: forall a b. (a -> NonEmpty b) -> NonEmpty a -> NonEmpty b
 concatMap f as = fromArray_ $ A.concatMap g (toArray as)
   where g a = toArray $ f a
 
-fromArray_ (a:as) = a :| as
-
 infixl 8 !!
-
 (!!) :: forall a. NonEmpty a -> Number -> Maybe a
 (!!) (NonEmpty a _) 0 = Just a 
 (!!) (NonEmpty _ as) n = A.(!!) as (n-1)
@@ -132,6 +143,14 @@ append (NonEmpty a as) ys = a :| A.append as (toArray ys)
 reverse :: forall a. NonEmpty a -> NonEmpty a
 reverse as = fromArray_ $ A.reverse $ toArray as 
 
+reducer :: forall a. (a -> a -> a) -> NonEmpty a -> a
+reducer f (NonEmpty a as) = foldr f a as
+
+reducel :: forall a. (a -> a -> a) -> NonEmpty a -> a
+reducel f (NonEmpty a as) = foldl f a as
+
+fromArray_ (a:as) = a :| as
+
 foreign import pop_
   """
   function pop_(l) {
@@ -141,9 +160,3 @@ foreign import pop_
     return l1;
   }
   """ :: forall a. [a] -> [a]
-
-reducer :: forall a. (a -> a -> a) -> NonEmpty a -> a
-reducer f (NonEmpty a as) = F.foldrArray f a as
-
-reducel :: forall a. (a -> a -> a) -> NonEmpty a -> a
-reducel f (NonEmpty a as) = F.foldlArray f a as

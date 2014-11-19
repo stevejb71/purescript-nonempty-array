@@ -18,6 +18,8 @@
 
     instance eqNonEmpty :: (Eq a) => Eq (NonEmpty a)
 
+    instance foldableNonEmpty :: Foldable NonEmpty
+
     instance functorNonEmpty :: Functor NonEmpty
 
     instance monadNonEmpty :: Monad NonEmpty
@@ -25,6 +27,8 @@
     instance semigroupNonEmpty :: Semigroup (NonEmpty a)
 
     instance showNonEmpty :: (Show a) => Show (NonEmpty a)
+
+    instance traversableNonEmpty :: T.Traversable NonEmpty
 
 
 ### Values

@@ -5,6 +5,8 @@ import qualified Data.Array as A
 import Data.Array.NonEmpty
 import Data.Array.NonEmpty.Unsafe
 import Data.Maybe   
+import Data.Foldable
+import Data.Traversable
 
 instance arbNonEmpty :: (Arbitrary a) => Arbitrary (NonEmpty a) where
   arbitrary = NonEmpty <$> arbitrary <*> arbitrary
@@ -45,3 +47,7 @@ main = do
     qc "functor - identity" \xs -> (\x -> x) <$> xs == xs 
     qc "functor - composition" \xs -> ((+) 1) <$> ((+) 2) <$> xs == ((+) 3) <$> xs
     qc "fromArray" \(NonEmpty a as) -> fromArray (a:as) == (NonEmpty a as)
+    qc "foldl doing sum" \xs -> foldl (+) 100 xs == (head xs) + sum (tail xs) + 100   
+    qc "foldr doing sum" \xs -> foldr (+) 100 xs == (head xs) + sum (tail xs) + 100   
+    qc "sequence" \xs -> sequence (Just <$> xs) == Just xs 
+    qc "sequence with a Nothing" \(NonEmpty _ as) -> sequence (NonEmpty Nothing (Just <$> as)) == Nothing
