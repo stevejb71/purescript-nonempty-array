@@ -12,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/stevejb71/purescript-nonempty-array"
-  }, 
+  },
   "license": "MIT",
   "ignore": [
     "bower_components",
@@ -23,10 +23,10 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-arrays": "~0.2",
-    "purescript-foldable-traversable": "~0.1"
+    "purescript-arrays": "~0.3.0",
+    "purescript-foldable-traversable": "~0.3.1"
   },
   "devDependencies": {
-    "purescript-quickcheck": "~0.3"
+    "purescript-quickcheck": "~0.5.2"
   }
 }
