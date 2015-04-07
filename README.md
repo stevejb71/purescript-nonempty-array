@@ -234,6 +234,13 @@ reducel :: forall a. (a -> a -> a) -> NonEmpty a -> a
 ```
 
 
+#### `sconcat`
+
+``` purescript
+sconcat :: forall a. (Semigroup a) => NonEmpty a -> a
+```
+
+
 
 ## Module Data.Array.NonEmpty.Unsafe
 

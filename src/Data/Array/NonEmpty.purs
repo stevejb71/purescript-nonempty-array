@@ -23,6 +23,7 @@ module Data.Array.NonEmpty
     ,reverse
     ,reducer
     ,reducel
+    ,sconcat
   ) where
 
 import qualified Data.Array (append, drop, take, map, filter, nub, nubBy, concatMap, (!!), length, reverse) as A
@@ -148,6 +149,9 @@ reducer f (NonEmpty a as) = foldr f a as
 
 reducel :: forall a. (a -> a -> a) -> NonEmpty a -> a
 reducel f (NonEmpty a as) = foldl f a as
+
+sconcat :: forall a. (Semigroup a) => NonEmpty a -> a
+sconcat = reducel (<>)
 
 fromArray_ (a:as) = a :| as
 
