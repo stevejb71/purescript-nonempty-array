@@ -2,84 +2,243 @@
 
 ## Module Data.Array.NonEmpty
 
-### Types
+#### `NonEmpty`
 
-    data NonEmpty a where
-      NonEmpty :: a -> [a] -> NonEmpty a
-
-
-### Type Class Instances
-
-    instance applicativeNonEmpty :: Applicative NonEmpty
-
-    instance applyNonEmpty :: Apply NonEmpty
-
-    instance bindNonEmpty :: Bind NonEmpty
-
-    instance eqNonEmpty :: (Eq a) => Eq (NonEmpty a)
-
-    instance foldableNonEmpty :: Foldable NonEmpty
-
-    instance functorNonEmpty :: Functor NonEmpty
-
-    instance monadNonEmpty :: Monad NonEmpty
-
-    instance semigroupNonEmpty :: Semigroup (NonEmpty a)
-
-    instance showNonEmpty :: (Show a) => Show (NonEmpty a)
-
-    instance traversableNonEmpty :: T.Traversable NonEmpty
+``` purescript
+data NonEmpty a
+  = NonEmpty a [a]
+```
 
 
-### Values
+#### `showNonEmpty`
 
-    (!!) :: forall a. NonEmpty a -> Number -> Maybe a
+``` purescript
+instance showNonEmpty :: (Show a) => Show (NonEmpty a)
+```
 
-    (:|) :: forall a. a -> [a] -> NonEmpty a
 
-    (<|) :: forall a. a -> NonEmpty a -> NonEmpty a
+#### `eqNonEmpty`
 
-    append :: forall a. NonEmpty a -> NonEmpty a -> NonEmpty a
+``` purescript
+instance eqNonEmpty :: (Eq a) => Eq (NonEmpty a)
+```
 
-    concatMap :: forall a b. (a -> NonEmpty b) -> NonEmpty a -> NonEmpty b
 
-    drop :: forall a. Number -> NonEmpty a -> [a]
+#### `functorNonEmpty`
 
-    filter :: forall a. (a -> Boolean) -> NonEmpty a -> [a]
+``` purescript
+instance functorNonEmpty :: Functor NonEmpty
+```
 
-    head :: forall a. NonEmpty a -> a
 
-    last :: forall a. NonEmpty a -> a
+#### `applyNonEmpty`
 
-    length :: forall a. NonEmpty a -> Number
+``` purescript
+instance applyNonEmpty :: Apply NonEmpty
+```
 
-    map :: forall a b. (a -> b) -> NonEmpty a -> NonEmpty b
 
-    nub :: forall a. (Eq a) => NonEmpty a -> NonEmpty a
+#### `applicativeNonEmpty`
 
-    nubBy :: forall a. (a -> a -> Boolean) -> NonEmpty a -> NonEmpty a
+``` purescript
+instance applicativeNonEmpty :: Applicative NonEmpty
+```
 
-    pop :: forall a. NonEmpty a -> [a]
 
-    push :: forall a. a -> NonEmpty a -> NonEmpty a
+#### `bindNonEmpty`
 
-    reducel :: forall a. (a -> a -> a) -> NonEmpty a -> a
+``` purescript
+instance bindNonEmpty :: Bind NonEmpty
+```
 
-    reducer :: forall a. (a -> a -> a) -> NonEmpty a -> a
 
-    reverse :: forall a. NonEmpty a -> NonEmpty a
+#### `monadNonEmpty`
 
-    singleton :: forall a. a -> NonEmpty a
+``` purescript
+instance monadNonEmpty :: Monad NonEmpty
+```
 
-    tail :: forall a. NonEmpty a -> [a]
 
-    take :: forall a. Number -> NonEmpty a -> [a]
+#### `semigroupNonEmpty`
 
-    toArray :: forall a. NonEmpty a -> [a]
+``` purescript
+instance semigroupNonEmpty :: Semigroup (NonEmpty a)
+```
+
+
+#### `foldableNonEmpty`
+
+``` purescript
+instance foldableNonEmpty :: Foldable NonEmpty
+```
+
+
+#### `traversableNonEmpty`
+
+``` purescript
+instance traversableNonEmpty :: T.Traversable NonEmpty
+```
+
+
+#### `(:|)`
+
+``` purescript
+(:|) :: forall a. a -> [a] -> NonEmpty a
+```
+
+
+#### `toArray`
+
+``` purescript
+toArray :: forall a. NonEmpty a -> [a]
+```
+
+
+#### `length`
+
+``` purescript
+length :: forall a. NonEmpty a -> Number
+```
+
+
+#### `head`
+
+``` purescript
+head :: forall a. NonEmpty a -> a
+```
+
+
+#### `tail`
+
+``` purescript
+tail :: forall a. NonEmpty a -> [a]
+```
+
+
+#### `last`
+
+``` purescript
+last :: forall a. NonEmpty a -> a
+```
+
+
+#### `push`
+
+``` purescript
+push :: forall a. a -> NonEmpty a -> NonEmpty a
+```
+
+
+#### `pop`
+
+``` purescript
+pop :: forall a. NonEmpty a -> [a]
+```
+
+
+#### `(<|)`
+
+``` purescript
+(<|) :: forall a. a -> NonEmpty a -> NonEmpty a
+```
+
+
+#### `take`
+
+``` purescript
+take :: forall a. Number -> NonEmpty a -> [a]
+```
+
+
+#### `drop`
+
+``` purescript
+drop :: forall a. Number -> NonEmpty a -> [a]
+```
+
+
+#### `map`
+
+``` purescript
+map :: forall a b. (a -> b) -> NonEmpty a -> NonEmpty b
+```
+
+
+#### `filter`
+
+``` purescript
+filter :: forall a. (a -> Boolean) -> NonEmpty a -> [a]
+```
+
+
+#### `singleton`
+
+``` purescript
+singleton :: forall a. a -> NonEmpty a
+```
+
+
+#### `nub`
+
+``` purescript
+nub :: forall a. (Eq a) => NonEmpty a -> NonEmpty a
+```
+
+
+#### `nubBy`
+
+``` purescript
+nubBy :: forall a. (a -> a -> Boolean) -> NonEmpty a -> NonEmpty a
+```
+
+
+#### `concatMap`
+
+``` purescript
+concatMap :: forall a b. (a -> NonEmpty b) -> NonEmpty a -> NonEmpty b
+```
+
+
+#### `(!!)`
+
+``` purescript
+(!!) :: forall a. NonEmpty a -> Number -> Maybe a
+```
+
+
+#### `append`
+
+``` purescript
+append :: forall a. NonEmpty a -> NonEmpty a -> NonEmpty a
+```
+
+
+#### `reverse`
+
+``` purescript
+reverse :: forall a. NonEmpty a -> NonEmpty a
+```
+
+
+#### `reducer`
+
+``` purescript
+reducer :: forall a. (a -> a -> a) -> NonEmpty a -> a
+```
+
+
+#### `reducel`
+
+``` purescript
+reducel :: forall a. (a -> a -> a) -> NonEmpty a -> a
+```
+
 
 
 ## Module Data.Array.NonEmpty.Unsafe
 
-### Values
+#### `fromArray`
 
-    fromArray :: forall a. [a] -> NonEmpty a
+``` purescript
+fromArray :: forall a. [a] -> NonEmpty a
+```
