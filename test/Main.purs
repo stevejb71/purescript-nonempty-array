@@ -1,27 +1,29 @@
-module Main where
+module Test.Main where
 
-import Test.QuickCheck
-import qualified Data.Array as A
+import Prelude
 import Data.Array.NonEmpty
 import Data.Array.NonEmpty.Unsafe
-import Data.Maybe   
 import Data.Foldable
+import Data.Maybe
 import Data.Traversable
+import Test.QuickCheck
+import Test.QuickCheck.Arbitrary
+import qualified Data.Array as A
 
 instance arbNonEmpty :: (Arbitrary a) => Arbitrary (NonEmpty a) where
   arbitrary = NonEmpty <$> arbitrary <*> arbitrary
 
-qc :: String -> (NonEmpty Number -> Boolean) -> QC Unit
+qc :: String -> (NonEmpty Int -> Boolean) -> QC Unit
 qc name f = do
     quickCheck (\x -> (f x) <?> name ++ " failed")
     return unit
 
-qc_ll :: String -> (NonEmpty Number -> NonEmpty Number -> Boolean) -> QC Unit
+qc_ll :: String -> (NonEmpty Int -> NonEmpty Int -> Boolean) -> QC Unit
 qc_ll name f = do
     quickCheck (\x y -> (f x y) <?> name ++ " failed")
     return unit
 
-qc_nl :: String -> (Number -> NonEmpty Number -> Boolean) -> QC Unit
+qc_nl :: String -> (Int -> NonEmpty Int -> Boolean) -> QC Unit
 qc_nl name f = do
     quickCheck (\x y -> (f x y) <?> name ++ " failed")
     return unit
@@ -44,10 +46,10 @@ main = do
     qc_nl "Cons - Tail" \x xs -> tail (x <| xs) == toArray xs
     qc "Last" \(NonEmpty a as) -> let x = (NonEmpty a as) in (A.length as == 0 && last x == a) || (Just (last x) == A.last as)
     qc "nubBy" \xs -> xs == nubBy (==) (xs `append` xs)
-    qc "functor - identity" \xs -> (\x -> x) <$> xs == xs 
+    qc "functor - identity" \xs -> (\x -> x) <$> xs == xs
     qc "functor - composition" \xs -> ((+) 1) <$> ((+) 2) <$> xs == ((+) 3) <$> xs
-    qc "fromArray" \(NonEmpty a as) -> fromArray (a:as) == (NonEmpty a as)
-    qc "foldl doing sum" \xs -> foldl (+) 100 xs == (head xs) + sum (tail xs) + 100   
-    qc "foldr doing sum" \xs -> foldr (+) 100 xs == (head xs) + sum (tail xs) + 100   
-    qc "sequence" \xs -> sequence (Just <$> xs) == Just xs 
+    qc "fromArray" \(NonEmpty a as) -> fromArray (a `A.cons` as) == (NonEmpty a as)
+    qc "foldl doing sum" \xs -> foldl (+) 100 xs == (head xs) + sum (tail xs) + 100
+    qc "foldr doing sum" \xs -> foldr (+) 100 xs == (head xs) + sum (tail xs) + 100
+    qc "sequence" \xs -> sequence (Just <$> xs) == Just xs
     qc "sequence with a Nothing" \(NonEmpty _ as) -> sequence (NonEmpty Nothing (Just <$> as)) == Nothing
