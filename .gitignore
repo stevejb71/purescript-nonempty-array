@@ -1,5 +1,5 @@
-.psci
-bower_components/
-node_modules/
-output/
-output_tests/
+/.*
+!/.gitignore
+/bower_components/
+/node_modules/
+/output/
